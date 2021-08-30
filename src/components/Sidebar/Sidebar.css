@@ -27,6 +27,10 @@
     min-width: 80px;
 }
 
+.pro-sidebar .pro-menu .active a{
+    color: black;
+}  
+
 #header .pro-sidebar-inner {
     background-color: white;
     box-shadow: 0.5px 0.866px 2px 0px rgba(0, 0, 0, 0.15);

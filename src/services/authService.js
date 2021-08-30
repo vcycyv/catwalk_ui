@@ -1,8 +1,10 @@
 import axios from 'axios';
 import config from 'react-global-configuration';
+import { history } from '../helpers';
 
 const authService = {
     login,
+    logout,
 }
 
 export default authService;
@@ -15,4 +17,20 @@ function login(username, password) {
             }
             return;
         })
+}
+
+function logout() {
+    localStorage.removeItem('token');
+    history.push('/login');
+}
+
+export function authHeader() {
+    // return authorization header with jwt token
+    let token = localStorage.getItem('token');
+
+    if (token) {
+        return { 'Authorization': 'Bearer ' + token };
+    } else {
+        return {};
+    }
 }

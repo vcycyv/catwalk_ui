@@ -1,6 +1,6 @@
 import { authConstants } from '../constants';
 
-const token = JSON.parse(localStorage.getItem("token"));
+const token = localStorage.getItem("token");
 
 const initialState = token ? { loggedIn: true } : {};
 
@@ -23,6 +23,8 @@ export default function auth(state = initialState, action) {
                 loggedIn: false,
                 message: payload,
             };
+            case authConstants.LOGOUT:
+                return {};
         default:
             return state;
     }

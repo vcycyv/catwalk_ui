@@ -8,9 +8,14 @@ export const authActions = {
 
 function login(username, password, from) {
     return dispatch => {
+        dispatch(request())
+
         authService.login(username, password).then(
-            data => {
+            () => {
                 dispatch(success());
+                if (from.pathname === '/') {
+                    from = '/dataSource/tables'
+                }
                 history.push(from);
                 return Promise.resolve();
             },
@@ -28,6 +33,7 @@ function login(username, password, from) {
         );
     };
 
+    function request() { return { type: authConstants.LOGIN_REQUEST } }
     function success() { return { type: authConstants.LOGIN_SUCCESS } };
     function failure(msg) { return { type: authConstants.LOGIN_FAILURE, payload: msg } };
 };

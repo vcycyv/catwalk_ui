@@ -13,13 +13,14 @@ function LoginPage() {
     const [submitted, setSubmitted] = useState(false);
     const { username, password } = inputs;
     const loggingIn = useSelector(state => state.auth.loggingIn);
+    const message = useSelector(state => state.auth.message);
     const dispatch = useDispatch();
     const location = useLocation();
 
     // reset login status
-    // useEffect(() => { 
-    //     dispatch(authActions.logout()); 
-    // }, []);
+    useEffect((dispatch) => {
+        // dispatch(authActions.logout());
+    }, []);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -55,6 +56,13 @@ function LoginPage() {
                         <div className="invalid-feedback">Password is required</div>
                     }
                 </div>
+                {message && (
+                    <div className="form-group">
+                        <div className="alert alert-danger" role="alert">
+                            {message}
+                        </div>
+                    </div>
+                )}
                 <div className="form-group">
                     <button className="btn btn-primary">
                         {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
