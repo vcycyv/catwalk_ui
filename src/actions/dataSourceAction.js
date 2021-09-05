@@ -7,11 +7,11 @@ export const dataSourceActions = {
 function getDataSources(){
     return dispatch => {
         dataSourceService.getDataSources().then(
-            data => {
-                return Promise.resolve();
+            response => {
+                return Promise.resolve(response.data);
             },
             error => {
-                return Promise.reject();
+                return Promise.reject(error);
             }
         )
     }

@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { authActions } from '../actions';
+import authService from "../services/authService";
 
 function LoginPage() {
     const [inputs, setInputs] = useState({
@@ -19,7 +20,7 @@ function LoginPage() {
 
     // reset login status
     useEffect((dispatch) => {
-        // dispatch(authActions.logout());
+        authService.logout()
     }, []);
 
     function handleChange(e) {

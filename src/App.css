@@ -1,16 +1,13 @@
-#content {
-    float: right;
-    background-color: rgb(185, 185, 226);
-    width: 100%;
-    height: 100vh;
-    flex-shrink: 0;
-    position: relative;
+.logo {
+    height: 32px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.3);
 }
 
-#wrapper {
-    display: flex;
-    flex-direction: row;
-    background-color: khaki;
-    width: 100%;
-    position: relative;
+.site-layout .site-layout-background {
+    background: #fff;
+}
+
+[data-theme="dark"] .site-layout .site-layout-background {
+    background: #141414;
 }
