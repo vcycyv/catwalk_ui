@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 import 'typeface-open-sans'
 //import Sidebar from './components/Sidebar/Sidebar';
@@ -24,6 +24,9 @@ let App = () => {
             <Switch>
                 <Route exact path="/login" component={LoginPage} />
                 <PrivateRoutes />
+                <Route exact path="/">
+                    <Redirect to="/login" />
+                </Route>
             </Switch>
         </Router>
     )
@@ -35,7 +38,7 @@ let PrivateRoutes = () => {
             <Sidebar />
             <Layout className="site-layout">
                 <Header className="ant-layout-sider-dark" style={{ padding: 0 }} >
-                    <h1 style={{textAlign: 'center', color: 'white', fontFamily: 'open sans', fontSize: '32px', fontWeight: 800 }}>Open BI Toolkit</h1>
+                    <h1 style={{ textAlign: 'center', color: 'white', fontFamily: 'open sans', fontSize: '32px', fontWeight: 800 }}>Open BI Toolkit</h1>
                 </Header>
                 <Content>
                     <PrivateRoute exact path="/dataSource/tables" component={TablesPage} />

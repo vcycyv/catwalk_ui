@@ -1,6 +1,4 @@
 import axios from 'axios';
-import config from 'react-global-configuration';
-import { authHeader } from './authService';
 
 const dataSourceService = {
     getDataSources,
@@ -9,9 +7,7 @@ const dataSourceService = {
 export default dataSourceService;
 
 function getDataSources() {
-    return axios.get(config.get('apiUrl') + 'dataSources', {
-        headers: authHeader(),
-    })
+    return axios.get('/dataSources')
 }
 
 // function handleResponse(response) {

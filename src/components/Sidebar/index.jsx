@@ -20,25 +20,25 @@ const Sidebar = () => {
     return (
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
+            <Menu theme="dark" defaultOpenKeys={['sub1']} mode="inline" defaultSelectedKeys={["/dataSource/tables"]} selectedKeys={[window.location.pathname]}>
                 <Menu.SubMenu key="sub1" icon={<AiOutlineTable />} title="Data Source">
-                    <Menu.Item key="tables">
+                    <Menu.Item key="/dataSource/tables" >
                         <Link to='/dataSource/tables'>
                             tables
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="connections">
+                    <Menu.Item key="/dataSource/connections">
                         <Link to='/dataSource/connections'>
                             connections
                         </Link>
                     </Menu.Item>
                 </Menu.SubMenu>
-                <Menu.Item key="models" icon={<AiOutlineLineChart />}>
+                <Menu.Item key="/models" icon={<AiOutlineLineChart />}>
                     <Link to='/models'>
                         Models
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="servers" icon={<AiOutlineCloudServer />}>
+                <Menu.Item key="/servers" icon={<AiOutlineCloudServer />}>
                     <Link to='/servers'>
                         Servers
                     </Link>

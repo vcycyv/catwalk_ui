@@ -1,19 +1,20 @@
 import axios from 'axios';
-import config from 'react-global-configuration';
 import { history } from '../helpers';
 
 const authService = {
     login,
     logout,
+    getAuthHeader,
 }
 
 export default authService;
 
 function login(username, password) {
-    return axios.post(config.get('apiUrl') + 'auth', { username, password })
+    return axios.post('/auth', { username, password })
         .then(response => {
             if (response.data.token) {
-                localStorage.setItem('token', response.data.token)
+                localStorage.setItem('token', response.data.token);
+                axios.defaults.headers.common['Authorization'] = getAuthHeader();
             }
             return;
         })
@@ -24,12 +25,12 @@ function logout() {
     history.push('/login');
 }
 
-export function authHeader() {
+function getAuthHeader() {
     // return authorization header with jwt token
     let token = localStorage.getItem('token');
 
     if (token) {
-        return { 'Authorization': 'Bearer ' + token };
+        return 'Bearer ' + token ;
     } else {
         return {};
     }
