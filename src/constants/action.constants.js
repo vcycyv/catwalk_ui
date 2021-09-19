@@ -6,3 +6,8 @@ export const authConstants = {
 
     LOGOUT: 'USERS_LOGOUT',
 };
+
+export const dataSourceConstants = {
+    GET_DATASOURCES_SUCCESS: 'GET_DATASOURCES_SUCCESS',
+    GET_DATASOURCES_FAILURE: 'GET_DATASOURCES_FAILURE',
+}

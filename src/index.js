@@ -24,6 +24,7 @@ axios.interceptors.response.use(response => {
     return error.response;
 });
 axios.defaults.headers.common['Authorization'] = authService.getAuthHeader();
+//axios.defaults.headers.common['Access-Control-Allow-Credentials'] = false;
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 

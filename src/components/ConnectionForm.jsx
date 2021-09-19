@@ -31,29 +31,24 @@ const ConnectionForm = ({ submitForm, cancelForm, connection }) => {
                 form.resetFields();
                 cancelForm();
             }}>
-            <Form.Item name="id" label="id" style={{ display: 'none' }}> {/* hidden */}
+            <Form.Item name="id" label="id" style={{ display: 'none' }}> 
                 <Input />
             </Form.Item>
             <Form.Item name="type" label="Type" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
-
             <Form.Item name="name" label="Name" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
-
             <Form.Item name="host" label="Host" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
-
             <Form.Item name="user" label="User">
                 <Input />
             </Form.Item>
-
             <Form.Item name="password" label="Password">
-                <Input  type="password" />
+                <Input type="password" />
             </Form.Item>
-
             <Form.Item name="dbName" label="DBName">
                 <Input />
             </Form.Item>

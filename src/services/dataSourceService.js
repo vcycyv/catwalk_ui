@@ -1,18 +1,19 @@
 import axios from 'axios';
 
-const dataSourceService = {
+export const dataSourceService = {
     getDataSources,
+    getDrawers,
+    createDrawer,
 }
-
-export default dataSourceService;
 
 function getDataSources() {
     return axios.get('/dataSources')
 }
 
-// function handleResponse(response) {
-//     return response.text().then(text => {
-//         const data = text && JSON.parse(text);
-//         return handleResponseInternal(response, data);
-//     });
-// }
+function getDrawers() {
+    return axios.get('/drawers')
+}
+
+function createDrawer(drawer) {
+    return axios.post('/drawers', drawer)
+}

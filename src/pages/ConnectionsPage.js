@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { PageHeader, Table, Modal, Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { PageHeader, Table, Modal, Button, Space } from 'antd';
 import { connectionService } from '../services';
 import ConnectionForm from '../components/ConnectionForm';
 import _ from 'underscore';
@@ -135,7 +136,7 @@ function ConnectionsPage() {
         {
             title: 'Name',
             dataIndex: 'name',
-            render: (text, record) => <Button type="link" block key={record.id} onClick={() => onEditConnectionButtonClick(record.id)}>{text}</Button>
+            render: (text, record) => <Link to={`/dataSource/connections/${record.id}`}>{text}</Link>
         },
         {
             title: 'Type',
@@ -151,7 +152,11 @@ function ConnectionsPage() {
         },
         {
             title: 'Action',
-            render: (record) => <Button type="link" block key={record.id + "_delete"} onClick={() => deleteConnection(record.id)}>delete</Button>
+            render: (record) =>
+                <Space size="middle">
+                    <Button type="link" block key={record.id + "_edit"} onClick={() => onEditConnectionButtonClick(record.id)}>edit</Button> 
+                    <Button type="link" block key={record.id + "_delete"} onClick={() => deleteConnection(record.id)}>delete</Button>
+                </Space>
         },
     ]
 
@@ -180,4 +185,4 @@ function ConnectionsPage() {
     )
 }
 
-export { ConnectionsPage }
+export default ConnectionsPage

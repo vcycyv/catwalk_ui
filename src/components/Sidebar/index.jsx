@@ -17,10 +17,18 @@ const Sidebar = () => {
         setCollapsed(collapsed);
     };
 
+    const getSelectedKey = (path) => {
+        if (path.startsWith("/dataSource/connections")) {
+            return "/dataSource/connections"
+        }else{
+            return path
+        }
+    }
+
     return (
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo" />
-            <Menu theme="dark" defaultOpenKeys={['sub1']} mode="inline" defaultSelectedKeys={["/dataSource/tables"]} selectedKeys={[window.location.pathname]}>
+            <Menu theme="dark" defaultOpenKeys={['sub1']} mode="inline" defaultSelectedKeys={["/dataSource/tables"]} selectedKeys={[getSelectedKey(window.location.pathname)]}>
                 <Menu.SubMenu key="sub1" icon={<AiOutlineTable />} title="Data Source">
                     <Menu.Item key="/dataSource/tables" >
                         <Link to='/dataSource/tables'>

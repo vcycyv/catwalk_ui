@@ -6,8 +6,9 @@ import 'typeface-open-sans'
 import Sidebar from './components/Sidebar';
 import { PrivateRoute } from './components/PrivateRoute';
 import { LoginPage } from './pages/LoginPage';
-import { TablesPage } from './pages/TablesPage';
-import { ConnectionsPage } from './pages/ConnectionsPage';
+import TablesPage from './pages/TablesPage';
+import ConnectionsPage from './pages/ConnectionsPage';
+import ConnectionTablesPage from './pages/ConnectionTablesPage';
 import { ModelsPage } from './pages/ModelsPage';
 import { ServersPage } from './pages/ServersPage';
 import { history } from './helpers';
@@ -43,6 +44,7 @@ let PrivateRoutes = () => {
                 <Content>
                     <PrivateRoute exact path="/dataSource/tables" component={TablesPage} />
                     <PrivateRoute exact path="/dataSource/connections" component={ConnectionsPage} />
+                    <PrivateRoute exact path="/dataSource/connections/:connectionID" component={ConnectionTablesPage} />
                     <PrivateRoute exact path="/models" component={ModelsPage} />
                     <PrivateRoute exact path="/servers" component={ServersPage} />
                 </Content>

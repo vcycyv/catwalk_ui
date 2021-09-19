@@ -6,6 +6,8 @@ export const connectionService = {
     createConnection,
     updateConnection,
     deleteConnection,
+    getConnectionTables,
+    getConnectionTableData,
 }
 
 function getConnections() {
@@ -26,4 +28,12 @@ function updateConnection(connection) {
 
 function deleteConnection(id) {
     return axios.delete('/connections/' + id)
+}
+
+function getConnectionTables(connectionID) {
+    return axios.get('/connections/' + connectionID + "/tables")
+}
+
+function getConnectionTableData(connectionID, table) {
+    return axios.get('/connections/' + connectionID + "/tables/" + table)
 }
