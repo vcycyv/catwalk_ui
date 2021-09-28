@@ -15,6 +15,8 @@ function login(username, password) {
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 axios.defaults.headers.common['Authorization'] = getAuthHeader();
+            } else {
+                throw new Error("login error");
             }
             return;
         })

@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
-import { PageHeader, Modal, Table, Select, Space } from 'antd';
+import { PageHeader, Modal, Table, Select, Button, Space } from 'antd';
 
-import { connectionService } from '../services';
+import { connectionService, dataSourceService } from '../services';
+import DrawerViewer from '../components/DrawerViewer';
+
 
 export default function ConnectionTablesPage(props) {
     const { connectionID } = props.match.params
 
     const [tables, setTables] = React.useState([]);
     const [data, setData] = React.useState([]);
+    const [table, setTable] = React.useState("");
+    const [modalVisible, setModalVisible] = React.useState(false);
+    const [drawerID, setDrawerID] = React.useState("");
+    const [newDrawerName, setNewDrawerName] = React.useState("");
 
     useEffect(() => {
         connectionService.getConnectionTables(connectionID)
@@ -33,6 +39,7 @@ export default function ConnectionTablesPage(props) {
 
     function handleChange(value) {
         console.log(`selected ${value}`);
+        setTable(value);
         if (value.length > 0) {
             connectionService.getConnectionTableData(connectionID, value)
                 .then(
@@ -75,11 +82,45 @@ export default function ConnectionTablesPage(props) {
         return dataSource;
     }
 
+    function openModal() {
+        setModalVisible(true);
+    }
+
+    const handleOk = () => {
+        if (drawerID === "newDrawer") {
+            dataSourceService.createDrawer(newDrawerName)
+                .then(
+                    response => {
+                        let newDrawerID = response.data.id;
+                        dataSourceService.convertToDataSource(connectionID, table, newDrawerID);
+                        setModalVisible(false);
+                    }
+                )
+        } else {
+            dataSourceService.convertToDataSource(connectionID, table, drawerID);
+            setModalVisible(false);
+        }
+    }
+
+    const handleCancel = () => {
+        setModalVisible(false);
+    }
+
+    const onDrawerRadioChange = e => {
+        setDrawerID(e.target.value);
+    }
+
+    const onDrawerInputChange = e => {
+        setNewDrawerName(e.target.value)
+    }
+
     const { Option } = Select;
 
     return (
         <div>
-            <PageHeader title="Connection Tables" />
+            <PageHeader title="Connection Tables" extra={[
+                <Button key="add" onClick={openModal}>To Data Source</Button>
+            ]} />
             <Space>
                 Table:
                 <Select style={{ width: 220 }} onChange={handleChange}>
@@ -88,6 +129,14 @@ export default function ConnectionTablesPage(props) {
                 </Select>
             </Space>
             <Table dataSource={getDataSource(data)} columns={getColumns(data)} />;
+            <Modal
+                title="Select a Drawer to Import Data Source"
+                visible={modalVisible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                >
+                <DrawerViewer onDrawerRadioChange={onDrawerRadioChange} onDrawerInputChange={onDrawerInputChange}/>
+            </Modal>
         </div>
     )
 }
