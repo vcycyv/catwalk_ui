@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PageHeader, Table, Modal, Button, Space } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
 import { connectionService } from '../services';
 import ConnectionForm from '../components/ConnectionForm';
 import _ from 'underscore';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+
 
 const { confirm } = Modal;
 

@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar';
 import { PrivateRoute } from './components/PrivateRoute';
 import { LoginPage } from './pages/LoginPage';
 import TablesPage from './pages/TablesPage';
+import DrawersPage from './pages/DrawersPage';
 import ConnectionsPage from './pages/ConnectionsPage';
 import ConnectionTablesPage from './pages/ConnectionTablesPage';
 import { ModelsPage } from './pages/ModelsPage';
@@ -43,6 +44,7 @@ let PrivateRoutes = () => {
                 </Header>
                 <Content>
                     <PrivateRoute exact path="/dataSource/tables" component={TablesPage} />
+                    <PrivateRoute exact path="/dataSource/drawers" component={DrawersPage} />
                     <PrivateRoute exact path="/dataSource/connections" component={ConnectionsPage} />
                     <PrivateRoute exact path="/dataSource/connections/:connectionID" component={ConnectionTablesPage} />
                     <PrivateRoute exact path="/models" component={ModelsPage} />

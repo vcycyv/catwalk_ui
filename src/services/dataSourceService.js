@@ -6,7 +6,10 @@ export const dataSourceService = {
     deleteDataSource,
     convertToDataSource,
     getDrawers,
+    getDrawer,
     createDrawer,
+    updateDrawer,
+    deleteDrawer,
 }
 
 function getDataSources() {
@@ -30,6 +33,18 @@ function getDrawers() {
     return axios.get('/drawers')
 }
 
+function getDrawer(id) {
+    return axios.get('/drawers/' + id)
+}
+
 function createDrawer(drawer) {
     return axios.post('/drawers', {"name": drawer})
+}
+
+function updateDrawer(drawer) {
+    return axios.put('/drawers/' + drawer.id, drawer)
+}
+
+function deleteDrawer(id) {
+    return axios.delete('/drawers/' + id)
 }

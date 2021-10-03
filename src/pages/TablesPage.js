@@ -107,9 +107,12 @@ function TablesPage() {
             console.log("dataSources.items is undefined.")
             return [];
         } else {
-            console.log("type of dataSources.items: " + typeof dataSources.items)
-            console.log("dataSources.items is array: " + Array.isArray(dataSources.items))
-            return dataSources.items;
+            console.log("is dataSources.items an array: " + Array.isArray(dataSources.items))
+            if (Array.isArray(dataSources.items)) {
+                return dataSources.items;
+            } else {
+                return [];
+            }
         }
     }
 

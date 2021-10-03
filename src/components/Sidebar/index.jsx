@@ -20,7 +20,7 @@ const Sidebar = () => {
     const getSelectedKey = (path) => {
         if (path.startsWith("/dataSource/connections")) {
             return "/dataSource/connections"
-        }else{
+        } else {
             return path
         }
     }
@@ -33,6 +33,11 @@ const Sidebar = () => {
                     <Menu.Item key="/dataSource/tables" >
                         <Link to='/dataSource/tables'>
                             tables
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="/dataSource/drawers" >
+                        <Link to='/dataSource/drawers'>
+                            drawers
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="/dataSource/connections">
