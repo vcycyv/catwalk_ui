@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { PageHeader, Table, Modal, Form, Input, Button, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import _ from 'underscore';
@@ -9,9 +8,9 @@ import { dataSourceService } from '../services';
 const { confirm } = Modal;
 
 function DrawersPage() {
-    const [modalVisible, setModalVisible] = React.useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const [data, setData] = useState([])
-    const [formAction, setFormAction] = React.useState("add"); //"add" or "update"
+    const [formAction, setFormAction] = useState("add"); //"add" or "update"
     const [drawer, setDrawer] = useState({ 'id': '', 'name': '' })
     const [form] = Form.useForm();
 
@@ -167,8 +166,6 @@ function DrawersPage() {
                 <Form
                     name="drawerForm"
                     form={form}
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
                     initialValues={drawer}
                     onFinish={onFinish}
                     onReset={onCancel}

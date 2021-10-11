@@ -11,6 +11,7 @@ import DrawersPage from './pages/DrawersPage';
 import ConnectionsPage from './pages/ConnectionsPage';
 import ConnectionTablesPage from './pages/ConnectionTablesPage';
 import { ModelsPage } from './pages/ModelsPage';
+import { ModelBuilderPage } from './pages/ModelBuilderPage';
 import { ServersPage } from './pages/ServersPage';
 import { history } from './helpers';
 
@@ -47,7 +48,8 @@ let PrivateRoutes = () => {
                     <PrivateRoute exact path="/dataSource/drawers" component={DrawersPage} />
                     <PrivateRoute exact path="/dataSource/connections" component={ConnectionsPage} />
                     <PrivateRoute exact path="/dataSource/connections/:connectionID" component={ConnectionTablesPage} />
-                    <PrivateRoute exact path="/models" component={ModelsPage} />
+                    <PrivateRoute exact path="/models/builder" component={ModelBuilderPage} />
+                    <PrivateRoute exact path="/models/models" component={ModelsPage} />
                     <PrivateRoute exact path="/servers" component={ServersPage} />
                 </Content>
             </Layout>

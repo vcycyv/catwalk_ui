@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import DrawerViewer from './DrawerViewer';

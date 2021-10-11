@@ -28,8 +28,8 @@ const Sidebar = () => {
     return (
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo" />
-            <Menu theme="dark" defaultOpenKeys={['sub1']} mode="inline" defaultSelectedKeys={["/dataSource/tables"]} selectedKeys={[getSelectedKey(window.location.pathname)]}>
-                <Menu.SubMenu key="sub1" icon={<AiOutlineTable />} title="Data Source">
+            <Menu theme="dark" defaultOpenKeys={['dataSource']} mode="inline" defaultSelectedKeys={["/dataSource/tables"]} selectedKeys={[getSelectedKey(window.location.pathname)]}>
+                <Menu.SubMenu key="dataSource" icon={<AiOutlineTable />} title="Data Source">
                     <Menu.Item key="/dataSource/tables" >
                         <Link to='/dataSource/tables'>
                             tables
@@ -46,11 +46,18 @@ const Sidebar = () => {
                         </Link>
                     </Menu.Item>
                 </Menu.SubMenu>
-                <Menu.Item key="/models" icon={<AiOutlineLineChart />}>
-                    <Link to='/models'>
-                        Models
-                    </Link>
-                </Menu.Item>
+                <Menu.SubMenu key="models" icon={<AiOutlineLineChart />} title="Models">
+                    <Menu.Item key="/models/builder" >
+                        <Link to='/models/builder'>
+                            builder
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="/models/models" >
+                        <Link to='/models/models'>
+                            models
+                        </Link>
+                    </Menu.Item>
+                </Menu.SubMenu>
                 <Menu.Item key="/servers" icon={<AiOutlineCloudServer />}>
                     <Link to='/servers'>
                         Servers
