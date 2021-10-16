@@ -8,7 +8,7 @@ import { modelService } from '../services/modelService';
 
 const { Step } = Steps;
 
-function ModelBuilderPage() {
+export default function ModelBuilderPage() {
     const dispatch = useDispatch();
     const [data, setData] = useState({})
     const [current, setCurrent] = useState(0);
@@ -137,7 +137,7 @@ function ModelBuilderPage() {
         targetColumn["targetVar"] = !targetColumn["targetVar"]
         if (target.checked) {
             targetColumn["inputVar"] = false;
-            newColumns.map(column => {
+            newColumns.forEach(column => {
                 if (column.column !== targetColumn.column) {
                     column.targetVar = false;
                 }
@@ -253,5 +253,3 @@ function ModelBuilderPage() {
         </div>
     )
 }
-
-export { ModelBuilderPage }

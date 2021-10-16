@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../actions';
 import authService from "../services/authService";
 
-function LoginPage() {
+export default function LoginPage() {
     const [inputs, setInputs] = useState({
         username: '',
         password: ''
@@ -74,5 +74,3 @@ function LoginPage() {
         </div>
     );
 }
-
-export { LoginPage };

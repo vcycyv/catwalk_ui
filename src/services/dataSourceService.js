@@ -4,6 +4,7 @@ export const dataSourceService = {
     getDataSources,
     addDataSource,
     deleteDataSource,
+    getDataSourceContent,
     getDataColumns,
     convertToDataSource,
     getDrawers,
@@ -28,6 +29,10 @@ function convertToDataSource(connectionID, table, drawerID) {
 
 function deleteDataSource(id) {
     return axios.delete('/dataSources/' + id)
+}
+
+function getDataSourceContent(id) {
+    return axios.get('/dataSources/' +id + '/content')
 }
 
 function getDataColumns(id) {

@@ -15,6 +15,11 @@ function TablesPage() {
     const dispatch = useDispatch();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    const [dataSourceData, setDataSourceData] = React.useState([]);
+    const [dataSourceModalVisible, setDataSourceModalVisible] = React.useState(false);
+    const [dataSourceModalTitle, setDataSourceModalTitle] = React.useState("");
+
     const dataSources = useSelector(state => state.dataSource);
 
     useEffect(() => {
@@ -80,10 +85,68 @@ function TablesPage() {
         setModalVisible(false);
     };
 
+    //============= open data source functions ================
+    const openDataSource = (id, name) => {
+        dataSourceService.getDataSourceContent(id)
+            .then(
+                response => {
+                    setDataSourceModalTitle(name);
+                    let data = convertDataSourceContentToTwoDimensionArray(response.data);
+                    setDataSourceData(data);
+                    setDataSourceModalVisible(true);
+                }
+            )
+    }
+
+    function getColumns(data) {
+        if (data.length > 0) {
+            return data[0].map((column) => {
+                return {
+                    "title": column,
+                    "dataIndex": column,
+                    "key": column,
+                }
+            })
+        } else {
+            return []
+        }
+    }
+
+    function getDataSource(data) {
+        var dataSource = [];
+
+        var columns = getColumns(data);
+
+        for (var i = 1; i < data.length; i++) {
+            var column = { "key": i };
+            for (var j = 0; j < columns.length; j++) {
+                column[columns[j].key] = data[i][j];
+            }
+            dataSource.push(column);
+        }
+        return dataSource;
+    }
+
+    function convertDataSourceContentToTwoDimensionArray(content) {
+        let rtnVal = [];
+        var arrayOfLines = content.split("\n");
+        for (var i = 0; i < arrayOfLines.length; i++) {
+            var columns = arrayOfLines[i].split(",");
+            rtnVal[i] = columns;
+        }
+        return rtnVal;
+    }
+
+    function handleDataSourceModalOk() {
+        setDataSourceModalVisible(false);
+    }
+
     const columns = [
         {
             title: 'Name',
             dataIndex: 'name',
+            render: (text, record) =>
+                <Button type="link" block key={record.id} onClick={() => openDataSource(record.id, text)} >{text}</Button>
         },
         {
             title: 'Drawer',
@@ -102,7 +165,7 @@ function TablesPage() {
         },
     ]
 
-    const getDataSrouces = () => {
+    const getDataSources = () => {
         if (dataSources.items === undefined) {
             console.log("dataSources.items is undefined.")
             return [];
@@ -122,7 +185,7 @@ function TablesPage() {
                 <Button key="openForm" onClick={onListDrawers} icon={<UploadOutlined />}>Upload CSV</Button>
             ]} />
             {/* {dataSources.items.map((item) => {return item.id.toString()})} */}
-            <Table columns={columns} dataSource={getDataSrouces()} rowKey="id" />
+            <Table columns={columns} dataSource={getDataSources()} rowKey="id" />
             {
                 (modalVisible) ?
                     <Modal
@@ -139,6 +202,23 @@ function TablesPage() {
                         ]}
                     >
                         <AddCSVToDrawerForm submitForm={addCSV} cancelForm={handleCancel} />
+                    </Modal>
+                    :
+                    null}
+            {
+                (dataSourceModalVisible) ?
+                    <Modal
+                        title={dataSourceModalTitle}
+                        visible={dataSourceModalVisible}
+                        width={1000}
+                        closable={false}
+                        footer={[
+                            <Button type="primary" onClick={handleDataSourceModalOk} >
+                                OK
+                            </Button>,
+                        ]}
+                    >
+                        <Table dataSource={getDataSource(dataSourceData)} columns={getColumns(dataSourceData)} pagination={{ pageSize: 5, showSizeChanger: false }} scroll={{ x: 400 }} />
                     </Modal>
                     :
                     null}

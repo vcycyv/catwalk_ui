@@ -5,14 +5,14 @@ import 'typeface-open-sans'
 //import Sidebar from './components/Sidebar/Sidebar';
 import Sidebar from './components/Sidebar';
 import { PrivateRoute } from './components/PrivateRoute';
-import { LoginPage } from './pages/LoginPage';
+import LoginPage from './pages/LoginPage';
 import TablesPage from './pages/TablesPage';
 import DrawersPage from './pages/DrawersPage';
 import ConnectionsPage from './pages/ConnectionsPage';
 import ConnectionTablesPage from './pages/ConnectionTablesPage';
-import { ModelsPage } from './pages/ModelsPage';
-import { ModelBuilderPage } from './pages/ModelBuilderPage';
-import { ServersPage } from './pages/ServersPage';
+import ModelsPage from './pages/ModelsPage';
+import ModelBuilderPage from './pages/ModelBuilderPage';
+import ServersPage from './pages/ServersPage';
 import { history } from './helpers';
 
 
