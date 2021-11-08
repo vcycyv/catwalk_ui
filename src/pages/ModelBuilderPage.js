@@ -175,8 +175,8 @@ export default function ModelBuilderPage() {
             title: 'Set Properties',
             content: <Form
                 name="model"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 8 }}
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 16 }}
                 style={{ marginTop: '35px' }}
                 autoComplete="off" >
                 <Form.Item
@@ -226,7 +226,7 @@ export default function ModelBuilderPage() {
                 <Button key="add" onClick={buildModel}>Build Model</Button>,
             ]} />
             <Row>
-                <Col span={20} offset={2}>
+                <Col span={16} offset={4}>
                     <Steps type="navigation"
                         current={current}
                         onChange={onChange}
@@ -238,7 +238,7 @@ export default function ModelBuilderPage() {
                     <div>{steps[current].content}</div>
                     <div style={{ display: "flex", justifyContent: 'flex-end', marginTop: '35px' }}>
                         {current < steps.length - 1 && (
-                            <Button type="primary" onClick={() => next()} style={{ marginLeft: "auto" }}>
+                            <Button type="primary" onClick={() => next()} >
                                 Next
                             </Button>
                         )}

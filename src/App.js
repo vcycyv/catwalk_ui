@@ -23,7 +23,7 @@ const { Header, Content } = Layout;
 let App = () => {
     return (
         <Router history={history} >
-            {/* <Redirect strict from="/dataSource" to="/dataSource/tables" /> */}
+            {<Redirect strict from="/dataSource" to="/dataSource/tables" />}
             <Switch>
                 <Route exact path="/login" component={LoginPage} />
                 <PrivateRoutes />
@@ -41,7 +41,7 @@ let PrivateRoutes = () => {
             <Sidebar />
             <Layout className="site-layout">
                 <Header className="ant-layout-sider-dark" style={{ padding: 0 }} >
-                    <h1 style={{ textAlign: 'center', color: 'white', fontFamily: 'open sans', fontSize: '32px', fontWeight: 800 }}>Open BI Toolkit</h1>
+                    <h1 style={{ textAlign: 'center', color: 'white', fontFamily: 'open sans', fontSize: '32px', fontWeight: 800 }}>BI Flow</h1>
                 </Header>
                 <Content>
                     <PrivateRoute exact path="/dataSource/tables" component={TablesPage} />

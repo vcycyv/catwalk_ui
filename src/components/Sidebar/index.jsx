@@ -27,7 +27,9 @@ const Sidebar = () => {
 
     return (
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-            <div className="logo" />
+            <div  >
+                <img alt="BI FLow" src="/bi_flow.png" style={{width: '100%'}} />
+            </div>
             <Menu theme="dark" defaultOpenKeys={['dataSource']} mode="inline" defaultSelectedKeys={["/dataSource/tables"]} selectedKeys={[getSelectedKey(window.location.pathname)]}>
                 <Menu.SubMenu key="dataSource" icon={<AiOutlineTable />} title="Data Source">
                     <Menu.Item key="/dataSource/tables" >
