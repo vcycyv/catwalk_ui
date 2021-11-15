@@ -3,11 +3,13 @@ import { Modal, Tree, Form, Input, Button } from 'antd';
 import { MdOutlineCreateNewFolder } from 'react-icons/md'
 import { FaRegEdit } from 'react-icons/fa'
 import { AiOutlineDelete } from 'react-icons/ai'
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { folderService } from '../services';
 
-export const FolderView = ({ handleOk, visible }) => {
-    const [modalVisible, setModalVisible] = React.useState(visible);
+const { confirm } = Modal;
+
+export const FolderView = ({ handleOk, handleCancel, visible }) => {
     const [folderNameModalVisible, setFolderNameModalVisible] = React.useState(false);
     const [folders, setFolders] = React.useState([]);
     const [folderModalTitle, setFolderModalTitle] = React.useState("");
@@ -58,21 +60,17 @@ export const FolderView = ({ handleOk, visible }) => {
                         }
                     }
                 }
-                currentFolder.push({ "title": folders[i].Path.substring(folders[i].Path.lastIndexOf(".") + 1), "key": folders[i].ID, "children": [] })
+                currentFolder.push({ "title": folders[i].Path.substring(folders[i].Path.lastIndexOf(".") + 1), "key": folders[i].ID, "children": [], "path": folders[i].Path })
                 currentFolder = data;
             }
         }
         return data;
     }
 
-    const handleCancel = () => {
-        setModalVisible(false);
-    };
-
     const onTreeNodeSelect = (selectedKeys, info) => {
         if (selectedKeys.length === 1) {
             console.log({ id: selectedKeys[0], title: info.node.title })
-            setCurrentNode({ id: selectedKeys[0], title: info.node.title })
+            setCurrentNode({ id: selectedKeys[0], title: info.node.title, path: info.node.path })
         }
     };
 
@@ -111,6 +109,32 @@ export const FolderView = ({ handleOk, visible }) => {
         setFolderNameModalVisible(false);
     }
 
+    const onDeleteFolder = () => {
+        confirm({
+            title: 'Do you want to delete this folder?',
+            icon: <ExclamationCircleOutlined />,
+            onOk() {
+                folderService.deleteFolder(currentNode["id"])
+                    .then(
+                        () => {
+                            return folderService.getFolders();
+                        }
+                    ).then(
+                        response => {
+                            setFolders(response.data)
+                        }
+                    ).catch(
+                        (error) => {
+                            console.log(error)
+                        }
+                    )
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
+
     const handleFolderNameChange = (e) => {
         console.log("folder name: ", e.target.value)
         setFolderName(e.target.value);
@@ -134,13 +158,17 @@ export const FolderView = ({ handleOk, visible }) => {
         setFolderNameModalVisible(true);
     }
 
+    const onFolderModalOK = () => {
+        handleOk({"path":currentNode.path, "id": currentNode.key})
+    }
+
     return (
         <>
-            <Modal title="Folders" visible={modalVisible} onOk={handleOk} onCancel={handleCancel} >
+            <Modal title="Folders" visible={visible} onOk={onFolderModalOK} onCancel={handleCancel} >
                 <div style={{ display: "flex", justifyContent: 'flex-end', marginBottom: '5px' }}>
                     <Button shape="circle" icon={<MdOutlineCreateNewFolder />} onClick={onCreateFolderModal} /> &nbsp;
                     <Button shape="circle" icon={<FaRegEdit />} onClick={onEditFolderModal} /> &nbsp;
-                    <Button shape="circle" icon={<AiOutlineDelete />} />
+                    <Button shape="circle" icon={<AiOutlineDelete onClick={onDeleteFolder} />} />
                 </div>
                 <Tree
                     treeData={getData()}

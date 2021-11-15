@@ -5,14 +5,17 @@ import { PageHeader, Row, Col, Steps, Form, Modal, Table, Input, Checkbox, Butto
 import { dataSourceActions } from '../actions';
 import { dataSourceService } from '../services/dataSourceService';
 import { modelService } from '../services/modelService';
+import { FolderView } from "../components/FolderView"
 
 const { Step } = Steps;
 
 export default function ModelBuilderPage() {
     const dispatch = useDispatch();
-    const [data, setData] = useState({})
+    const [data, setData] = useState({}) //form data
     const [current, setCurrent] = useState(0);
-    const [columns, setColumns] = useState([])
+    const [columns, setColumns] = useState([]);
+    const [location, setLocation] = useState({"path": "", "id":""});
+    const [folderViewVisible, setFolderViewVisible] = useState(false)
 
     const dataSources = useSelector(state => state.dataSource);
 
@@ -44,6 +47,15 @@ export default function ModelBuilderPage() {
         })
         console.log("onchange: " + e.target.name + " " + e.target.value)
     }
+
+    const openFolderModal = () => {
+        setFolderViewVisible(true);
+    }
+
+    const handleFolderSelection = (location) => {
+        setLocation(location);
+        setFolderViewVisible(false);
+    } 
 
     //================= step 1 =================
     const onChange = current => {
@@ -196,6 +208,11 @@ export default function ModelBuilderPage() {
                     name="algorithm">
                     <Input name="algorithm" onChange={changeHandler} defaultValue={data.description} />
                 </Form.Item>
+                <Form.Item
+                    label="Location"
+                    name="location">
+                    <label>{"/" + location.path.replaceAll(".", "/")}</label> <Button onClick={openFolderModal}>browse</Button>
+                </Form.Item>
             </Form>
         },
         {
@@ -250,6 +267,8 @@ export default function ModelBuilderPage() {
                     </div>
                 </Col>
             </Row>
+
+            <FolderView handleOk={handleFolderSelection} handleCancel={() => setFolderViewVisible(false)} visible={folderViewVisible}/>
         </div>
     )
 }
