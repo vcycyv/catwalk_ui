@@ -54,6 +54,10 @@ export default function ModelBuilderPage() {
 
     const handleFolderSelection = (location) => {
         setLocation(location);
+        setData({
+            ...data,
+            "folderId": location.id
+        })
         setFolderViewVisible(false);
     } 
 

@@ -159,7 +159,7 @@ export const FolderView = ({ handleOk, handleCancel, visible }) => {
     }
 
     const onFolderModalOK = () => {
-        handleOk({"path":currentNode.path, "id": currentNode.key})
+        handleOk({"path":currentNode.path, "id": currentNode.id})
     }
 
     return (
