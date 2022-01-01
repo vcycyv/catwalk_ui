@@ -5,6 +5,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import { modelService, dataSourceService } from '../services';
 import { dataSourceActions } from '../actions';
+import { getDataCascader } from './common';
 
 const { confirm } = Modal;
 const { Option } = Select;
@@ -13,8 +14,9 @@ export default function ModelsPage() {
     const dispatch = useDispatch();
     const [data, setData] = useState([])
     const [scoreData, setScoreData] = useState({})
-    const [drawers, setDrawers] = React.useState([]);
-    const [modalVisible, setModalVisible] = React.useState(false);
+    const [selectedModels, setSelectedModels] = useState([])
+    const [drawers, setDrawers] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
     const dataSources = useSelector(state => state.dataSource);
 
     useEffect(() => {
@@ -89,11 +91,41 @@ export default function ModelsPage() {
     const rowSelection = {
         onChange: (selectedRowKeys) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`)
+            setSelectedModels(selectedRowKeys)
         }
     }
 
     const handleScore = () => {
-        console.log("handle score...")
+        if (selectedModels.length > 1 || selectedModels.length === 0) {
+            Modal.error({
+                title: 'Error',
+                content: (
+                    <>
+                        You need to select one model to score.
+                    </>
+                )
+            })
+        } else {
+            modelService.score(selectedModels[0], scoreData)
+                .then(
+                    response => {
+                        if (response.status < 300) {
+                            setModalVisible(false)
+                        } else {
+                            Modal.error({
+                                title: 'Error',
+                                content: (
+                                    <>
+                                        It failed to score:
+                                        <br />
+                                        &nbsp;&nbsp;{response.data.message}
+                                    </>
+                                )
+                            })
+                        }
+                    }
+                )
+        }
     }
 
     const handleCancel = () => {
@@ -124,31 +156,6 @@ export default function ModelsPage() {
                 console.log('Cancel');
             },
         });
-    }
-
-    const getDataCascader = dataSources => {
-        let rtnVal = [];
-        let drawers = [];
-        if (dataSources.items !== undefined) {
-            dataSources.items.forEach(dataSource => {
-                if (!drawers.includes(dataSource.drawerName)) {
-                    drawers.push(dataSource.drawerName);
-                }
-            });
-            drawers.forEach(drawer => {
-                let tables = []; //elements are in form of {value, label}
-                dataSources.items.forEach(dataSource => {
-                    if (dataSource.drawerName === drawer) {
-                        let filteredTables = tables.filter(table => table.value === dataSource.id)
-                        if (filteredTables.length === 0) {
-                            tables.push({ "value": dataSource.id, "label": dataSource.name })
-                        }
-                    }
-                });
-                rtnVal.push({ "value": drawer, "label": drawer, "children": tables })
-            })
-        }
-        return rtnVal;
     }
 
     const columns = [

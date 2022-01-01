@@ -6,6 +6,7 @@ import { dataSourceActions } from '../actions';
 import { dataSourceService } from '../services/dataSourceService';
 import { modelService } from '../services/modelService';
 import { FolderView } from "../components/FolderView"
+import { getDataCascader } from './common';
 
 const { Step } = Steps;
 
@@ -76,32 +77,6 @@ export default function ModelBuilderPage() {
     };
 
     //================= step 2 =================
-    //dataSources is an array of {drawerId, drawerName, Name}
-    const getDataCascader = dataSources => {
-        let rtnVal = [];
-        let drawers = [];
-        if (dataSources.items !== undefined) {
-            dataSources.items.forEach(dataSource => {
-                if (!drawers.includes(dataSource.drawerName)) {
-                    drawers.push(dataSource.drawerName);
-                }
-            });
-            drawers.forEach(drawer => {
-                let tables = []; //elements are in form of {value, label}
-                dataSources.items.forEach(dataSource => {
-                    if (dataSource.drawerName === drawer) {
-                        let filteredTables = tables.filter(table => table.value === dataSource.id)
-                        if (filteredTables.length === 0) {
-                            tables.push({ "value": dataSource.id, "label": dataSource.name })
-                        }
-                    }
-                });
-                rtnVal.push({ "value": drawer, "label": drawer, "children": tables })
-            })
-        }
-        return rtnVal;
-    }
-
     const onDataSourceChange = e => {
         setData({ ...data, "trainTableCascaderMeta": e });
         if (Array.isArray(e) && e.length > 1) {

@@ -20,7 +20,7 @@ scoreRequest example:
 }
 */
 function score(id, scoreRequest) {
-    return axios.post('/models' + id + '/score', scoreRequest)
+    return axios.post('/models/' + id + '/score', scoreRequest)
 }
 
 function getModels() {
